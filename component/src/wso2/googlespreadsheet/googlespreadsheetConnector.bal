@@ -195,7 +195,7 @@ public struct Error {
 @Param{ value : "refreshToken: The refreshToken of the Google Spreadsheet App to access the Google Spreadsheet REST API"}
 @Param{ value : "clientId: The clientId of the App to access the Google Spreadsheet REST API"}
 @Param{ value : "clientSecret: The clientSecret of the App to access the Google Spreadsheet REST API"}
-public connector ClientConnector (string accessToken, string refreshToken, string clientId,
+public connector GoogleSpreadsheetClientConnector (string accessToken, string refreshToken, string clientId,
                            string clientSecret) {
     endpoint<oauth2:ClientConnector> googlespreadsheetEP {
         create oauth2:ClientConnector("https://sheets.googleapis.com", accessToken, clientId, clientSecret,

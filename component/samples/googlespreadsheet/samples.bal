@@ -2,8 +2,8 @@ import wso2.googlespreadsheet;
 import ballerina.net.http;
 
 function main (string[] args) {
-    endpoint<googlespreadsheet:ClientConnector> googlespreadsheetConnector {
-        create googlespreadsheet:ClientConnector(args[1], args[2], args[3], args[4]);
+    endpoint<googlespreadsheet:GoogleSpreadsheetClientConnector> googlespreadsheetConnector {
+        create googlespreadsheet:GoogleSpreadsheetClientConnector(args[1], args[2], args[3], args[4]);
     }
 
     googlespreadsheet:Error e = {};
@@ -27,16 +27,15 @@ function main (string[] args) {
         }
     } else if (args[0] == "createSpreadsheet") {
         println("---------Calling createSpreadsheet-----------");
-        googlespreadsheet:SpreadsheetProperties spreadsheetProperties = {title:"TestBal"};
-        googlespreadsheet:SheetProperties sheetProperties= {title:"testSheet", sheetType:"GRID", sheetId:97};
-        googlespreadsheet:Sheet sheet = [];
-        sheet.properties = sheetProperties;
+        googlespreadsheet:SpreadsheetProperties spreadsheetProperties = {title:"TestBal",autoRecalc:"ON_CHANGE"};
         googlespreadsheet:Spreadsheet spreadsheetRequestStruct = {};
-        spreadsheetRequestStruct.sheets[0] = sheet;
         spreadsheetRequestStruct.properties = spreadsheetProperties;
-        println("####spreadsheetRequestStruct###" + spreadsheetRequestStruct);
+        println("####spreadsheetRequestStruct###");
+        println(spreadsheetRequestStruct);
+
         googlespreadsheet:Spreadsheet spreadsheetResponse = {};
         spreadsheetResponse, e = googlespreadsheetConnector.createSpreadsheet(spreadsheetRequestStruct, args[5]);
+        println(spreadsheetResponse);
         if(e == null) {
             println(spreadsheetResponse);
         } else {
